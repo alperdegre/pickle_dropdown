@@ -14,7 +14,7 @@ function ProjectInfo() {
         <Link href={"/time.jpg"} className="font-semibold">
           1:58:18,61
         </Link>{" "}
-        as a challenge
+        - plus a couple more for fixes - as a challenge
       </p>
       <p>Uses Tanstack React Query for easier invalidation</p>
       <p>Uses useDebounce to not refetch with every keystroke</p>

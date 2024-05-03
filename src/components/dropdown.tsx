@@ -2,7 +2,7 @@
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "@uidotdev/usehooks";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Character } from "../types/types";
 import { ChevronDown } from "./icons";
 import SelectedItem from "./selectedItem";
@@ -36,9 +36,13 @@ function Dropdown() {
     };
   }, []);
 
+  const handleInvalidate = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ["characters"] });
+  }, [queryClient]);
+
   useEffect(() => {
     handleInvalidate();
-  }, [debouncedInput]);
+  }, [debouncedInput, handleInvalidate]);
 
   const { status, data, error } = useQuery({
     queryKey: ["characters"],
@@ -65,10 +69,6 @@ function Dropdown() {
     } else {
       setDropdownOpen(false);
     }
-  };
-
-  const handleInvalidate = () => {
-    queryClient.invalidateQueries({ queryKey: ["characters"] });
   };
 
   const handleSelected = (
@@ -175,6 +175,7 @@ function Dropdown() {
             data.results.map((character: Character) => {
               return (
                 <DropdownItem
+                  key={character.id}
                   character={character}
                   onSelected={handleSelected}
                   checked={checkCheckedStatus(character.id)}

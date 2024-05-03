@@ -18,9 +18,9 @@ function DropdownItem({ input, character, checked, onSelected }: Props) {
 
     const parts = name.split(new RegExp(`(${input})`, "gi"));
 
-    return parts.map((part) => {
+    return parts.map((part, index) => {
       if (part.toLocaleLowerCase() === input.toLocaleLowerCase()) {
-        return <strong>{part}</strong>;
+        return <strong key={index}>{part}</strong>;
       } else {
         return part;
       }
